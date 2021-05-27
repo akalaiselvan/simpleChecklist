@@ -29,9 +29,9 @@ export default (reducer,actions,initialValue)=>{
             database.CreateTable('create table IF NOT EXISTS list_dtl ( pid integer, id integer, value varchar(100),isSelected varchar(10));');
             database.CreateTable('create table IF NOT EXISTS app_prop (bgColor varchar(20),font varchar(50));');
              database.setProps('Select * from app_prop');
+             database.getList('Select * from app_prop',setMisc);
              database.getList('Select * from list_hdr',setHdr);
              database.getList('Select * from list_dtl',setList);
-             database.getList('Select * from app_prop',setMisc);
              console.log('Setting is load true')
 
             setIsLoaded(true);

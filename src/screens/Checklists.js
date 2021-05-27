@@ -18,7 +18,7 @@ const Checklists=({navigation})=>{
     }
 
     const {state,deleteSelected,hdr,list,misc,
-        setStates,isLoaded,setReqLoad}=useContext(CheckListContext);
+        setStates,isLoaded,setReqLoad,setMisc}=useContext(CheckListContext);
     const [keyPress,setKeyPress]=useState(false);
     const [modalVisible,setModalVisible]=useState(false);
     const [selected,setSelected]=useState('');
@@ -27,18 +27,28 @@ const Checklists=({navigation})=>{
     const [tmpResult,setTempResult]=useState([]);
 
       const loadData=()=>{
-          if(isLoaded&&state.reqLoad){
-            if(hdr.length > 0 && list.length > 0 && misc.length>0){
-		console.log('Setting state')
-                setReqLoad();
-                setStates(hdr,list,misc);
+	console.log('Hdr '+hdr.length)
+	console.log('List '+list.length)
+	console.log('Misc'+misc.length)
+          if(isLoaded&&state.reqLoad){  
+                if(hdr.length > 0 && list.length > 0 && misc.length>0){
+	        	        console.log('Setting state')
+                        setReqLoad();
+                        setStates(hdr,list,misc);
+                }else{
+                    console.log('No hdr and dtl found so setting misc');
+                    if(misc.length>0){
+                    console.log('Setting misc');
+                        setMisc(misc)
+                    }
                 }
             }
         };
 
         useEffect(()=>{
+		console.log('IN USE EFFECT')
             loadData();
-        });
+        },[hdr,list,misc]);
 
     
         const showModal=(id)=>{

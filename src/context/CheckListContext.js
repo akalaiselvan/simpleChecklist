@@ -83,7 +83,11 @@ const reducer=(state,actions)=>{
         case 'removeAll':
             database.ExecuteInsert('delete from list_hdr');
             database.ExecuteInsert('delete from list_dtl');
-            return {...state,list:[]}        
+            return {...state,list:[]}       
+        case 'setMisc':
+            const bColor=actions.payload.misc[0].bgColor;
+            const fnt=actions.payload.misc[0].font;
+            return {...state,bgColor:bColor,font:fnt}                 
         case 'setInitial':
                 //console.log('Setting initial hdr'+JSON.stringify(actions.payload.hdr));
                 //console.log('Setting initial dtl'+JSON.stringify(actions.payload.list));
@@ -201,6 +205,10 @@ const setStates=dispatch=>(hdr,list,misc)=>{
     dispatch({type:'setInitial',payload:{hdr:hdr,list:list,misc:misc}})
 }
 
+const setMisc=dispatch=>(misc)=>{
+    dispatch({type:'setMisc',payload:{misc:misc}})
+}
+
 export const {Context,Provider}=createContext(reducer,{ addChecklist,
                                                         switchCheck,
                                                         deleteSelected,
@@ -212,6 +220,7 @@ export const {Context,Provider}=createContext(reducer,{ addChecklist,
                                                         removeAll,
                                                         setStates,
                                                         setReqLoad,
+                                                        setMisc
                                         
                                                     },
                                                              {list:[
