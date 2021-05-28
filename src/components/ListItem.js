@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet ,View ,Text,TouchableOpacity} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import {Context as CheckListContext} from '../context/CheckListContext'; 
-import  MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
 import  SimpleLineIcons  from 'react-native-vector-icons/SimpleLineIcons';
 import Colors from '../UI/Color'
 
@@ -12,9 +11,7 @@ const ListItem=({item,func,font,bgColor})=>{
             <View style={[styles.item,{backgroundColor:boxColor}]} >
                 <Text style={[styles.text,{fontFamily:font}]}>{item.title}</Text> 
                 <TouchableOpacity style={styles.options}
-                                    //onPress={()=>del(item.id)}>
                                     onPress={()=>func()}>
-                        {/* <MaterialIcons name="delete" size={28} color="black" /> */}
                         <SimpleLineIcons name="options-vertical" size={20} color="black" />
                 </TouchableOpacity>
             </View>   
@@ -29,6 +26,7 @@ const ListBox=({pid,item})=>{
     return <View style={[styles.boxItem,{backgroundColor:boxColor}]}>
         {pid?
               <CheckBox 
+              tintColors={{true:'#333',false:'#333'}}
               value={check}
               onValueChange={(v)=>switchCheck(pid,item.id,v)}/>:null}
               <Text style={[styles.boxtext,

@@ -45,6 +45,7 @@ const EditList=({navigation})=>{
     return<View style={[styles.content,{backgroundColor:state.bgColor}]}>
             <View style={styles.head}>
                         <TextInput autoFocus placeholder='Give some title'
+                                placeholderTextColor={'#666'}
                                 ref={titRef}
                                 style={[styles.right,
                                     {fontFamily:state.font,backgroundColor:boxColor}]}
@@ -55,6 +56,7 @@ const EditList=({navigation})=>{
                                 />
                         <Spacer/>
                         <TextInput placeholder='Add checklist' 
+                            placeholderTextColor={'#666'}
                             ref={listRef}
                             style={[styles.inputs,
                                 {fontFamily:state.font,backgroundColor:boxColor}]} 
@@ -72,6 +74,7 @@ const EditList=({navigation})=>{
                 return <View>
                         <View style={[styles.Item,{backgroundColor:boxColor}]}>
                             <TextInput value={item.value}
+                                        placeholderTextColor={'#666'}
                                         textAlignVertical='center'
                                         marginLeft={15}
                                         onChangeText={(val)=>update(item.id,val)}
@@ -114,7 +117,8 @@ const styles=StyleSheet.create({
 
     },
     input:{
-        width:'100%'
+        width:'100%',
+        color:'#333'
     },
     head:{
         //backgroundColor:'blue',
@@ -129,14 +133,16 @@ const styles=StyleSheet.create({
         marginLeft:40,
         marginRight:20,
         borderRadius:10,
-        padding:10
+        padding:10,
+        color:'#333'
     },
     right:{
         marginLeft:40,
         marginRight:20,
         marginTop:20,
         borderRadius:10,
-        padding:10    
+        padding:10,
+        color:'#333'    
     },
 });
 

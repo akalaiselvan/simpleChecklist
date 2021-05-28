@@ -42,6 +42,10 @@ const AddList=({navigation})=>{
     }
 
     const saveChecklist=()=>{
+	if(clist.length<1){
+            showToast("Add some task to your list");
+            return;
+        }
         if(title===''){
             showToast("Give some title to your list");
             titRef.current.focus();
@@ -62,6 +66,7 @@ const AddList=({navigation})=>{
         <View>
             <View style={styles.head}>
                 <TextInput autoFocus placeholder='Give some title'
+                        placeholderTextColor={'#666'}
                         maxLength={50}
                         ref={titRef}
                         style={[styles.right,
@@ -72,6 +77,7 @@ const AddList=({navigation})=>{
                         blurOnSubmit={false}/>
                 <Spacer/>
                 <TextInput placeholder='Add checklist' 
+                    placeholderTextColor={'#666'}
                     maxLength={75}
                     ref={listRef}
                     style={[styles.input,{fontFamily:state.font,backgroundColor:boxColor}]} 
@@ -112,14 +118,16 @@ const styles=StyleSheet.create({
         marginLeft:40,
         marginRight:20,
         borderRadius:10,
-        padding:10
+        padding:10,
+        color:'#333',
     },
     right:{
         marginLeft:40,
         marginRight:20,
         marginTop:20,
         borderRadius:10,
-        padding:10
+        padding:10,
+        color:'#333',
     },
     content:{
         //backgroundColor:'pink',
