@@ -1,10 +1,11 @@
 import React,{useContext, useRef,useState} from 'react';
-import { Button } from 'react-native';
+import { Button, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native';
 import {View,StyleSheet,FlatList} from 'react-native';
 import {Context as CheckListContext} from '../context/CheckListContext';
 import Spacer from '../components/Spacer';
 import Colors from '../UI/Color'
+import Plus from 'react-native-vector-icons/Feather';
 
 const EditList=({navigation})=>{
     const id = navigation.getParam('id');
@@ -65,6 +66,9 @@ const EditList=({navigation})=>{
                             onSubmitEditing={addClist}
                             blurOnSubmit={false}
                             />
+                        <TouchableOpacity style={styles.plus} onPress={addClist}>
+                            <Plus name='plus' size={40} color={boxColor} style={{}}/>    
+                        </TouchableOpacity>    
                         <Spacer/>
             </View>
         <FlatList
@@ -130,20 +134,30 @@ const styles=StyleSheet.create({
     inputs:{
         //backgroundColor:'blue',
         borderColor:'transparent',
-        marginLeft:40,
+        marginLeft:20,
         marginRight:20,
         borderRadius:10,
         padding:10,
-        color:'#333'
+        color:'#333',
+        width:288
     },
     right:{
-        marginLeft:40,
+        marginLeft:20,
         marginRight:20,
         marginTop:20,
         borderRadius:10,
         padding:10,
-        color:'#333'    
+        color:'#333'  ,
+          
     },
+    plus:{
+        width:40,
+        //backgroundColor:'blue',
+        alignSelf:'flex-end',
+        position:'absolute',
+        top:90,
+        right:10
+    }
 });
 
 

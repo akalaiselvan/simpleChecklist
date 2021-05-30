@@ -9,10 +9,9 @@ import { TouchableOpacity ,FlatList} from 'react-native';
 import Search from '../components/SearchBar';
 import Modal from '../UI/Modal';
 import Option from '../components/Option';
+import {NavigationEvents} from 'react-navigation';
 
 const Checklists=({navigation})=>{
-
-
     const showToast=(content)=>{
         ToastAndroid.showWithGravity(content,ToastAndroid.SHORT,ToastAndroid.CENTER);
     }
@@ -22,9 +21,8 @@ const Checklists=({navigation})=>{
     const [keyPress,setKeyPress]=useState(false);
     const [modalVisible,setModalVisible]=useState(false);
     const [selected,setSelected]=useState('');
-    const [res,showres]=useState(false);
     const [cont,setCont]=useState('');
-    const [tmpResult,setTempResult]=useState([]);
+    const [results,setResults]=useState(state.list);
 
       const loadData=()=>{
 	console.log('Hdr '+hdr.length)
@@ -82,45 +80,35 @@ const Checklists=({navigation})=>{
                 return;
             }
             setCont('');
-            const lists=state.list;
-            const temp=[];
-            lists.forEach(m=>{
-                if(m.title.toLowerCase().includes(cont.toLocaleLowerCase())){
-                    temp.push({title:m.title,id:m.id})
-                }
+            const lists=results;
+            let searchResults=lists.filter(item=>{
+                return item.title.toLowerCase().includes(cont.toLocaleLowerCase())
             });
-            if(temp.length==0){
+            if(searchResults.length===0){
                 showToast('No results found');
                 return;
             }
-            setTempResult(temp);
-            showres(true);
+            setResults(searchResults);
         }
 
-        let resHeight=tmpResult.length>10?700:tmpResult.length*60;
+        const clearErr=()=>{
+            setResults(state.list)
+        }
+
+
+
     return <View style={[styles.view,{backgroundColor:state.bgColor}]}>
+        <NavigationEvents onWillFocus={clearErr}/>
         <Search context={cont} setCon={setCont} doSearch={SearchResults} style={{marginTop:200}}/>
         <View style={styles.cont}>
-        <Modal modalVisible={res} setModalVisible={showres}>
-            <View style={{height:resHeight}}>
-            <FlatList
-                data={tmpResult}
-                keyExtractor={i=>i.id.toString()}
-                renderItem={({item})=>{
-                    return <Option  cont={item.title} 
-                                    onPress={()=>navigation.navigate('ListView',{id:item.id})}
-                                    hide={()=>showres(!res)}/>
-                }}
-            />
-            </View>
-        </Modal>
             <Modal modalVisible={modalVisible} setModalVisible={setModalVisible} >
                 <Option cont='Edit' id={selected} 
                         onPress={()=>navigation.navigate('EditList',
                         {id:selected})}
                         hide={()=>setModalVisible(!modalVisible)}/>
                 <Option cont='Delete' id={selected} 
-                        onPress={()=>deleteSelected(selected)}
+                        onPress={()=>{deleteSelected(selected)
+                                      setResults(state.list)}}
                         hide={()=>setModalVisible(!modalVisible)}/>
                 <Option cont='Share' id={selected} 
                         onPress={()=>onShare(selected)}
@@ -128,7 +116,7 @@ const Checklists=({navigation})=>{
             </Modal>
             
             <FlatList
-                data={state.list}
+                data={results}
                 keyExtractor={i=>i.id.toString()}
                 renderItem={({item})=>{
                     return <TouchableOpacity

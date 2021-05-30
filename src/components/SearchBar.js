@@ -7,6 +7,7 @@ const SearchBar=({context,setCon,doSearch})=>{
     return <View style={styles.bg}>
         <FontAwesome name='search' style={styles.iconStyle}/>
         <TextInput
+            placeholderTextColor={'#666'}
             placeholder='Search'
             style={styles.inputStyle}
             value={context}
@@ -30,7 +31,8 @@ const styles=StyleSheet.create({
         marginHorizontal:10
     },
     inputStyle:{
-        flex:1
+        flex:1,
+        color:'#333',
     }
 });
 

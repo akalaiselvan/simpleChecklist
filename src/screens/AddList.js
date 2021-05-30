@@ -1,10 +1,11 @@
 import React,{useState,useContext, useRef,useEffect} from 'react';
-import {Button,ToastAndroid} from 'react-native';
+import {Button,ToastAndroid, TouchableOpacity} from 'react-native';
 import Spacer from '../components/Spacer';
 import ListForm from '../components/ListForm';
 import {View,StyleSheet,TextInput } from 'react-native';
 import {Context as checklistContext} from '../context/CheckListContext';
 import Colors from '../UI/Color'
+import Plus from 'react-native-vector-icons/Feather';
 
 const AddList=({navigation})=>{
 
@@ -76,15 +77,19 @@ const AddList=({navigation})=>{
                         onSubmitEditing={()=>listRef.current.focus()}
                         blurOnSubmit={false}/>
                 <Spacer/>
-                <TextInput placeholder='Add checklist' 
-                    placeholderTextColor={'#666'}
-                    maxLength={75}
-                    ref={listRef}
-                    style={[styles.input,{fontFamily:state.font,backgroundColor:boxColor}]} 
-                    value={value} 
-                    onChangeText={(v)=>setValue(v)}
-                    onSubmitEditing={addClist}
-                    blurOnSubmit={false}/>
+                    <TextInput placeholder='Add checklist' 
+                        placeholderTextColor={'#666'}
+                        maxLength={75}
+                        ref={listRef}
+                        style={[styles.input,{fontFamily:state.font,backgroundColor:boxColor}]} 
+                        value={value} 
+                        onChangeText={(v)=>setValue(v)}
+                        onSubmitEditing={addClist}
+                        blurOnSubmit={false}
+                        />
+                        <TouchableOpacity style={styles.plus} onPress={addClist}>
+                            <Plus name='plus' size={40} color={boxColor} style={{}}/>    
+                        </TouchableOpacity>
                 <Spacer/>
             </View>
             <View style={styles.content}>
@@ -104,25 +109,26 @@ const styles=StyleSheet.create({
         borderRadius: 10,
     },
     view:{
-        flex:1,
-        justifyContent:'flex-start',
+        // flex:1,
+        // justifyContent:'flex-start',
     },
     head:{
-        //backgroundColor:'blue',
         height:20,
         top:0,
         height:100,
+        marginBottom:10,
     },
     input:{
         borderColor:'transparent',
-        marginLeft:40,
+        marginLeft:20,
         marginRight:20,
         borderRadius:10,
         padding:10,
         color:'#333',
+        width:288
     },
     right:{
-        marginLeft:40,
+        marginLeft:20,
         marginRight:20,
         marginTop:20,
         borderRadius:10,
@@ -142,6 +148,14 @@ const styles=StyleSheet.create({
         left:160,
         width:100
     },
+    plus:{
+        width:40,
+        //backgroundColor:'blue',
+        alignSelf:'flex-end',
+        position:'absolute',
+        top:90,
+        right:10
+    }
 });
 
 AddList.navigationOptions=()=>{
